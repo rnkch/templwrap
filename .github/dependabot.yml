@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    # templ stays at the oldest version that works (see README); only CI tests newer ones.
+    ignore:
+      - dependency-name: github.com/a-h/templ
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
