@@ -1,0 +1,23 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # templ's parser API is not stable: catch a breaking release early.
+    - cron: "0 6 * * 1"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        templ: [v0.3.1070, latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go get github.com/a-h/templ@${{ matrix.templ }}
+      - run: go vet ./...
+      - run: go test ./...
